@@ -13,7 +13,8 @@
     "migration:run": "npm run build && npm run typeorm migration:run",
     "eslint": "npx eslint src",
     "eslint:fix": "npx eslint --fix src",
-    "seed": "ts-node -r tsconfig-paths/register ./src/seeders"
+    "seed": "ts-node -r tsconfig-paths/register ./src/seeders",
+    "seed:production": "cp src/seeders/*.seed.yml dist/seeders && NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/seeders"
   },
   "keywords": [],
   "author": "",
@@ -66,7 +67,7 @@
     "readline-sync": "^1.4.10",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.34",
-    "uuid": "^8.3.2",
-    "typescript-transform-paths": "^3.3.1"
+    "typescript-transform-paths": "^3.3.1",
+    "uuid": "^8.3.2"
   }
 }

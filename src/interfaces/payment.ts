@@ -4,6 +4,7 @@ interface PaymentInterface {
   userEmail: string;
   price: number;
   type: string;
+  hotel: boolean;
 }
 
 export default PaymentInterface;

@@ -21,14 +21,18 @@ export default class Payment extends BaseEntity {
   @Column()
   type: string;
 
+  @Column()
+  hotel: boolean;
+
   static async createNew({
     userName,
     userId,
     userEmail,
     price,
     type,
+    hotel,
   }: PaymentInterface) {
-    const payment = this.create({ userName, userId, userEmail, price, type });
+    const payment = this.create({ userName, userId, userEmail, price, type, hotel });
     await payment.save();
     return payment;
   }

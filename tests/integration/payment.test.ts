@@ -1,10 +1,7 @@
 import supertest from "supertest";
-import faker from "faker";
 import httpStatus from "http-status";
 
 import app, { init } from "@/app";
-import Payment from "@/entities/Payment";
-import User from "@/entities/User";
 import { clearDatabase, endConnection } from "../utils/database";
 import { createBasicSettings } from "../utils/app";
 import { createUser } from "../factories/userFactory";

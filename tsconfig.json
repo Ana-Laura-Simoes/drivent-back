@@ -12,10 +12,15 @@
     },
     "typeRoots": ["./src/@types", "./node_modules/@types"]
   },
-  "include": ["src"],
+  "include": ["src", "tests"],
+  "exclude": [
+    "node_modules",
+    "tests"
+  ],
   "plugins": [
     {
       "transform": "typescript-transform-paths"
     }
   ]
+  
 }

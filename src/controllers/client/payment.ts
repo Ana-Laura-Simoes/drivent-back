@@ -6,6 +6,7 @@ import * as service from "@/services/client/payment";
 
 export async function createPayment(req: Request, res: Response) {
   const paymentData = req.body as Payment;
+
   const payment = await service.createNewPayment(
     paymentData
   );

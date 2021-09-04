@@ -1,5 +1,5 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import RoomsData from "@/interfaces/room";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import Hotel from "@/entities/Hotel";
 
 @Entity("rooms")
 export default class Room extends BaseEntity {
@@ -14,4 +14,10 @@ export default class Room extends BaseEntity {
 
   @Column()
   available: number;
+
+  @Column()
+  hotelId: number;
+
+  @ManyToOne(() => Hotel, hotel => hotel.rooms)
+  hotel: Hotel;
 }

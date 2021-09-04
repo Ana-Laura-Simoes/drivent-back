@@ -1,14 +1,14 @@
 import { Router } from "express";
 
-import * as controller from "@/controllers/client/enrollment";
+import * as controller from "@/controllers/client/hotel";
 
-import schemaValidatingMiddleware from "@/middlewares/schemaValidatingMiddleware";
+//import schemaValidatingMiddleware from "@/middlewares/schemaValidatingMiddleware";
 
-import enrollmentSchema from "@/schemas/enrollmentSchema";
+//import enrollmentSchema from "@/schemas/enrollmentSchema";
 
 const router = Router();
 
-router.post("/", schemaValidatingMiddleware(enrollmentSchema), controller.saveEnrollmentInfo);
-router.get("/", controller.getEnrollmentInfos);
+router.get("/", controller.getHotelsInfo);
+//router.post("/", schemaValidatingMiddleware(enrollmentSchema), controller.saveEnrollmentInfo);
 
 export default router;

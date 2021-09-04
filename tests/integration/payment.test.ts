@@ -32,6 +32,7 @@ describe("POST /users", () => {
       userEmail: user.email,
       price: 300,
       type: "Online",
+      hotel: true
     };
 
     const payment = await agent.post("/payment").send(paymentBody);
@@ -56,6 +57,7 @@ describe("POST /users", () => {
       userEmail: user.email,
       price: 300,
       type: "Online",
+      hotel: true
     };
 
     const payment = await agent.post("/payment").send(paymentBody);
@@ -72,6 +74,7 @@ describe("POST /users", () => {
       userEmail: user.email,
       price: 300,
       type: "Online",
+      hotel: true
     };
 
     const payment = await agent.post("/payment").send(paymentBody);
@@ -88,6 +91,7 @@ describe("POST /users", () => {
       userEmail: user.email,
       price: "invalid",
       type: "Online",
+      hotel: true
     };
 
     const payment = await agent.post("/payment").send(paymentBody);
@@ -104,6 +108,24 @@ describe("POST /users", () => {
       userEmail: user.email,
       price: 300,
       type: "invalid",
+      hotel: true
+    };
+
+    const payment = await agent.post("/payment").send(paymentBody);
+
+    expect(payment.statusCode).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
+  });
+
+  it("should return error when hotel is not a boolean", async () => {
+    const user = await createUser();
+
+    const paymentBody = {
+      userName: "Credit Card Name",
+      userId: user.id,
+      userEmail: user.email,
+      price: 300,
+      type: "Online",
+      hotel: "notBoolean"
     };
 
     const payment = await agent.post("/payment").send(paymentBody);

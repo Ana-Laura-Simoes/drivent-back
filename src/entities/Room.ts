@@ -10,6 +10,9 @@ export default class Room extends BaseEntity {
   number: string;
 
   @Column()
+  type: string;
+
+  @Column()
   maxCapacity: number;
 
   @Column()

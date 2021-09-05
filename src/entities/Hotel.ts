@@ -13,6 +13,6 @@ export default class Hotel extends BaseEntity {
   rooms: Room[];
 
   static async getHotels() {
-    return await this.find();
+    return await this.find({ relations: ["rooms"] });
   }
 }

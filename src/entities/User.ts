@@ -16,7 +16,7 @@ export default class User extends BaseEntity {
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;
 
-  @Column()
+  @Column({ nullable: true })
   roomId: number;
 
   static async createNew(email: string, password: string) {

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 
 import * as hotelService from "@/services/client/hotel";
-import EnrollmentData from "@/interfaces/enrollment";
+//import EnrollmentData from "@/interfaces/enrollment";
 
 export async function getHotelsInfo(req: Request, res: Response) {
   const hotelsInfo = await hotelService.getHotelsWithRooms();

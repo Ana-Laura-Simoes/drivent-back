@@ -38,6 +38,8 @@ export default class Payment extends BaseEntity {
   }
 
   static async getPayment(userId: number) {
-    return await this.findOne({ where: { userId } });
+    const response = await this.findOne({ where: { userId } });
+    console.log(response);
+    return response;
   }
 }

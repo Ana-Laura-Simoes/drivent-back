@@ -36,4 +36,8 @@ export default class Payment extends BaseEntity {
     await payment.save();
     return payment;
   }
+
+  static async getPayment(userId: number) {
+    return await this.findOne({ where: { userId } });
+  }
 }

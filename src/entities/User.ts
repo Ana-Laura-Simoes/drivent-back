@@ -50,5 +50,18 @@ export default class User extends BaseEntity {
 
     return null;
   }
+
+  static async getUserById(id: number) {
+    return await this.findOne({ id });
+  }
+
+  static async updateUserRoom(userId: number, roomId: number) {
+    return await this
+      .createQueryBuilder()
+      .update(User)
+      .set({ roomId: roomId })
+      .where("id = :id", { id: userId } )
+      .execute();
+  }
 }
 

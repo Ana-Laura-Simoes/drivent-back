@@ -16,9 +16,6 @@ export default class User extends BaseEntity {
   @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
   createdAt: Date;
 
-  @Column({ nullable: true })
-  roomId: number;
-
   static async createNew(email: string, password: string) {
     await this.validateDuplicateEmail(email);
     const hashedPassword = this.hashPassword(password);
@@ -55,13 +52,13 @@ export default class User extends BaseEntity {
     return await this.findOne({ id });
   }
 
-  static async updateUserRoom(userId: number, roomId: number) {
-    return await this
-      .createQueryBuilder()
-      .update(User)
-      .set({ roomId: roomId })
-      .where("id = :id", { id: userId } )
-      .execute();
-  }
+  // static async updateUserRoom(userId: number, roomId: number) {
+  //   return await this
+  //     .createQueryBuilder()
+  //     .update(User)
+  //     .set({ roomId: roomId })
+  //     .where("id = :id", { id: userId } )
+  //     .execute();
+  // }
 }
 

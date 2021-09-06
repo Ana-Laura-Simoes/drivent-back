@@ -9,10 +9,13 @@ export default class Hotel extends BaseEntity {
   @Column()
   name: string;
 
+  @Column()
+  image: string;
+
   @OneToMany(() => Room, room => room.hotel)
   rooms: Room[];
 
   static async getHotels() {
-    return await this.find({ relations: ["rooms"] });
+    return await this.find({ relations: ["rooms"], order: { id: "DESC" }, });
   }
 }

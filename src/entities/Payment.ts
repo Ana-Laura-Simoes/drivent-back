@@ -42,7 +42,7 @@ export default class Payment extends BaseEntity {
   }
 
   static async getPayment(userId: number) {
-    return await this.findOne({ where: { userId } });
+    return await this.findOne({ userId });
   }
 
   static async updatePaymentRoomId(userId: number, roomId: number) {

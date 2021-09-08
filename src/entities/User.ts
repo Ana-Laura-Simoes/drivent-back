@@ -44,25 +44,16 @@ export default class User extends BaseEntity {
 
   static async findByEmailAndPassword(email: string, password: string) {
     const user = await this.findOne({ email });
-
+    
     if (user && bcrypt.compareSync(password, user.password)) {
       return user;
     }
-
+    
     return null;
   }
 
   static async getUserById(id: number) {
     return await this.findOne({ id });
   }
-
-  // static async updateUserRoom(userId: number, roomId: number) {
-  //   return await this
-  //     .createQueryBuilder()
-  //     .update(User)
-  //     .set({ roomId: roomId })
-  //     .where("id = :id", { id: userId } )
-  //     .execute();
-  // }
 }
 

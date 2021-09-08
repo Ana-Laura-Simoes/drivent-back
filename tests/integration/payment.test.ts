@@ -1,10 +1,11 @@
 import supertest from "supertest";
 import httpStatus from "http-status";
 
-import app, { init } from "@/app";
+import app, { init } from "../../src/app";
 import { clearDatabase, endConnection } from "../utils/database";
 import { createBasicSettings } from "../utils/app";
 import { createUser } from "../factories/userFactory";
+import { send } from "process";
 
 const agent = supertest(app);
 
@@ -131,5 +132,46 @@ describe("POST /users", () => {
     const payment = await agent.post("/payment").send(paymentBody);
 
     expect(payment.statusCode).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
+  });
+});
+
+describe("GET /users", () => {
+  it("should return status 401", async () => {
+    const payment = await agent.get("/payment");
+
+    expect(payment.statusCode).toEqual(httpStatus.UNAUTHORIZED);
+  });
+
+  it("should return status 200", async () => {
+    const user = await createUser();
+    const {email} = user
+
+    const session = await agent.post("/auth/sign-in").send({email,password:"123456"});
+    const {token} = session.body
+    const payment = await agent.get("/payment").set('Authorization', `Bearer ${token}`);
+
+    expect(payment.statusCode).toEqual(httpStatus.NO_CONTENT);
+  });
+
+  it("should return status 200", async () => {
+    const user = await createUser();
+    const {email} = user
+    const session = await agent.post("/auth/sign-in").send({email,password:"123456"});
+    const {token} = session.body
+
+    const paymentBody = {
+      userName: "Credit Card Name",
+      userId: user.id,
+      userEmail: user.email,
+      price: 300,
+      type: "Online",
+      hotel: true
+    };
+
+    const pago = await agent.post("/payment").send(paymentBody);
+
+    const payment = await agent.get("/payment").set('Authorization', `Bearer ${token}`);
+
+    expect(payment.statusCode).toEqual(httpStatus.OK);
   });
 });

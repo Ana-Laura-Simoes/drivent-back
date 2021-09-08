@@ -1,11 +1,11 @@
 import faker from "faker";
-
-import User from "@/entities/User";
+import bcrypt from "bcrypt"
+import User from "../../src/entities/User";
 
 export async function createUser() {
   const user = User.create({
     email: faker.internet.email(),
-    password: "123456"
+    password: bcrypt.hashSync("123456", 12)
   });
 
   await user.save();

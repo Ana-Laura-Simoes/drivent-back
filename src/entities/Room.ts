@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import Hotel from "@/entities/Hotel";
 import Payment from "@/entities/Payment";
 
@@ -23,27 +23,33 @@ export default class Room extends BaseEntity {
   hotelId: number;
 
   @ManyToOne(() => Hotel, hotel => hotel.rooms)
+  @JoinColumn()
   hotel: Hotel;
 
-  static async setOrUpdate(userId: number, roomId: number) {
-    const { roomId: previousRoom } = await Payment.getPayment(userId);
+  static async getRoom(id: number) {
+    return await this.findOne( id );
+  }
 
-    if(previousRoom) {
+  static async setOrUpdate(userId: number, newRoom: number) {
+    const user= await Payment.getPayment(userId); 
+    const { roomId } = user;
+    
+    if(roomId) {
       await this
         .createQueryBuilder()
         .update(Room)
         .set({ available: () => "available + 1" })
-        .where("id = :id", { id: previousRoom } )
+        .where("id = :id", { id: roomId } )
         .execute();
     }
 
-    await Payment.updatePaymentRoomId(userId, roomId);
+    await Payment.updatePaymentRoomId(userId, newRoom);
 
     await this
       .createQueryBuilder()
       .update(Room)
       .set({ available: () => "available - 1" })
-      .where("id = :id", { id: roomId } )
+      .where("id = :id", { id: newRoom } )
       .execute();
   }
 }

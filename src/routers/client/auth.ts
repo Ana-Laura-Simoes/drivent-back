@@ -9,4 +9,4 @@ const router = Router();
 
 router.post("/sign-in", schemaValidatingMiddleware(signInSchema), controller.signIn);
 
-export default router;
+export default router; 

@@ -11,7 +11,7 @@ export default class Day extends BaseEntity {
     weekdayId: number;
 
     @Column()
-    date: Date;
+    date: string;
 
     @OneToOne(() => Weekday, (weekday) => weekday.day, { eager: true })
     weekday: Weekday;

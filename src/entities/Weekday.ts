@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
 import Day from "./Day";
 
 @Entity("weekdays")
@@ -10,6 +10,5 @@ export default class Weekday extends BaseEntity {
     name: string;
 
     @OneToOne(() => Day, (day: Day) => day.weekday)
-    @JoinColumn()
     day: Day;
 }

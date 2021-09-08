@@ -45,7 +45,7 @@ describe("POST /rooms", () => {
     };
     await agent.post("/payment").send(paymentBody);
 
-    const choose = await agent.post("/rooms").send({currentUser:{id:user.id},currentRoom:{id:room.id}}).set('Authorization', `Bearer ${token}`);
+    const choose = await agent.post("/rooms").send({currentUser:{userId:user.id},currentRoom:{id:room.id}}).set('Authorization', `Bearer ${token}`);
 
     expect(choose.statusCode).toEqual(httpStatus.OK);
   });
@@ -53,7 +53,7 @@ describe("POST /rooms", () => {
   it("should respond with status 200 when user change rooms", async () => {
     const hotel = await createHotel()
     const room1 = await createRoom(hotel.id)
-    const room2 = await createRoom(hotel.id)
+    const room2 = await createRoom(hotel.id) 
     
     const user = await createUser();
     const {email} = user
@@ -70,8 +70,8 @@ describe("POST /rooms", () => {
     };
     await agent.post("/payment").send(paymentBody);
 
-    await agent.post("/rooms").send({currentUser:{id:user.id},currentRoom:{id:room1.id}}).set('Authorization', `Bearer ${token}`);
-    const change = await agent.post("/rooms").send({currentUser:{id:user.id},currentRoom:{id:room2.id}}).set('Authorization', `Bearer ${token}`);
+    await agent.post("/rooms").send({currentUser:{userId:user.id},currentRoom:{id:room1.id}}).set('Authorization', `Bearer ${token}`);
+    const change = await agent.post("/rooms").send({currentUser:{userId:user.id},currentRoom:{id:room2.id}}).set('Authorization', `Bearer ${token}`);
 
     expect(change.statusCode).toEqual(httpStatus.OK);
   });

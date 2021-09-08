@@ -31,8 +31,9 @@ export default class Room extends BaseEntity {
   }
 
   static async setOrUpdate(userId: number, newRoom: number) {
-    const { roomId } = await Payment.getPayment(userId); 
-
+    const user= await Payment.getPayment(userId); 
+    const { roomId } = user;
+    
     if(roomId) {
       await this
         .createQueryBuilder()

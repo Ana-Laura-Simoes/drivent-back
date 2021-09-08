@@ -24,6 +24,9 @@ export default class Payment extends BaseEntity {
   @Column()
   hotel: boolean;
 
+  @Column({ nullable: true })
+  roomId: number
+
   static async createNew({
     userName,
     userId,
@@ -31,9 +34,23 @@ export default class Payment extends BaseEntity {
     price,
     type,
     hotel,
+    roomId,
   }: PaymentInterface) {
-    const payment = this.create({ userName, userId, userEmail, price, type, hotel });
+    const payment = this.create({ userName, userId, userEmail, price, type, hotel, roomId });
     await payment.save();
     return payment;
+  }
+
+  static async getPayment(userId: number) {
+    return await this.findOne({ userId });
+  }
+
+  static async updatePaymentRoomId(userId: number, roomId: number) {
+    return await this
+      .createQueryBuilder()
+      .update(Payment)
+      .set({ roomId: roomId })
+      .where("userId = :id", { id: userId } )
+      .execute();
   }
 }

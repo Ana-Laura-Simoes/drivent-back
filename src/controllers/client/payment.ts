@@ -12,3 +12,13 @@ export async function createPayment(req: Request, res: Response) {
   );
   res.status(httpStatus.CREATED).send(payment);
 }
+
+export async function getPayment(req: Request, res: Response) {
+  const userPayment = await service.getPayment(req.user.id);
+
+  if(!userPayment) {
+    return res.sendStatus(httpStatus.NO_CONTENT);
+  }
+  
+  res.send(userPayment).status(httpStatus.OK);
+}

@@ -16,4 +16,5 @@ export default joi.object({
     .valid(...acceptedTypes)
     .required(),
   hotel: joi.boolean().required(),
+  roomId: joi.any(),
 });

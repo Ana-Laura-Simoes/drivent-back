@@ -20,10 +20,10 @@ export default class Activity extends BaseEntity {
     inscriptions: number;
 
     @Column()
-    beginTime: number;
+    beginTime: Date;
 
     @Column()
-    endTime: number;
+    endTime: Date;
 
     @Column()
     dayId: number;

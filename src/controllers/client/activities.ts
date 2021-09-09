@@ -4,7 +4,7 @@ import Activity from "@/entities/Activity";
 
 import * as service from "@/services/client/activity";
 
-export async function getDays(req: Request, res: Response) {
-  const days = await service.getDays();
-  res.status(httpStatus.OK).send(days);
+export async function getActivities(req: Request, res: Response) {
+  const activities = await service.getActivities();
+  res.status(httpStatus.OK).send(activities);
 }

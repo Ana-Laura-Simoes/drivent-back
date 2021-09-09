@@ -5,6 +5,7 @@ import tokenValidationMiddleware from "@/middlewares/tokenValidationMiddleware";
 
 const router = Router();
 
-router.get("/", tokenValidationMiddleware, controller.getDays);
+//router.get("/", tokenValidationMiddleware, controller.getActivities);
+router.get("/", controller.getActivities);
 
 export default router;

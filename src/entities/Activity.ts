@@ -30,4 +30,8 @@ export default class Activity extends BaseEntity {
     static async getDays() {
       return await this.find({ select: ["beginTime"] });
     }
+
+    static async geyActivities() {
+      return await this.find({ select: ["maxInscriptions", "inscriptions"] });
+    }
 }

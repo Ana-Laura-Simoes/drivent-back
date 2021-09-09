@@ -29,13 +29,10 @@ export default class Activity extends BaseEntity {
     activityUser: ActivityUser;
 
     static async getDays() {
-      const v = await this.find({ select: ["beginTime"] });
-      console.log(v);
-      return v;
+      return await this.find({ select: ["beginTime"] });
     }
 
     static async getActivitiesByDay(day: string) {
-      //const beginTime="2021-10-22";
       const response= await this.createQueryBuilder("activities").where("DATE(activities.beginTime) = :time", { time: day }).getMany();
       return response;
     }

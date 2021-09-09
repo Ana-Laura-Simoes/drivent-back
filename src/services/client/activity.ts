@@ -1,5 +1,5 @@
 import Activity from "@/entities/Activity";
 
 export async function getActivities() {
-  return await Activity.geyActivities();
+  return await Activity.getActivities();
 }

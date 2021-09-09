@@ -31,7 +31,7 @@ export default class Activity extends BaseEntity {
       return await this.find({ select: ["beginTime"] });
     }
 
-    static async geyActivities() {
+    static async getActivities() {
       return await this.find({ select: ["maxInscriptions", "inscriptions"] });
     }
 }

@@ -1,21 +1,35 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+} from "typeorm";
 import User from "./User";
 import Activity from "./Activity";
 
 @Entity("activitiesUsers")
 export default class ActivityUser extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    userId: number;
+  @Column()
+  userId: number;
 
-    @Column()
-    activityId: number;
+  @Column()
+  activityId: number;
 
-    @ManyToOne(() => User, (user) => user.activityUser)
-    user: User;
+  @ManyToOne(() => User, (user) => user.activityUser)
+  user: User;
 
-    @ManyToOne(() => Activity, (activity) => activity.activityUser)
-    activity: Activity;
-}
+  @ManyToOne(() => Activity, (activity) => activity.activityUser)
+  activity: Activity;
+
+  static async getUserActivities(id: number) {
+    return await this.find(
+      {
+        where: { userId: id },
+        relations: ["activity"]
+      }
+    );
+  }}

@@ -1,5 +1,4 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import LocationInterface from "@/interfaces/location";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity("locations")
 export default class Location extends BaseEntity {

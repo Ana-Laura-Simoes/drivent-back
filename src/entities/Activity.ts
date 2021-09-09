@@ -24,9 +24,6 @@ export default class Activity extends BaseEntity {
     @Column()
     endTime: Date;
 
-    @Column()
-    dayId: number;
-
     @OneToMany(() => ActivityUser, (activityUser) => activityUser.activity)
     activityUser: ActivityUser;
 }

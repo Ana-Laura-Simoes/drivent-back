@@ -26,4 +26,8 @@ export default class Activity extends BaseEntity {
 
     @OneToMany(() => ActivityUser, (activityUser) => activityUser.activity)
     activityUser: ActivityUser;
+
+    static async getDays() {
+      return await this.find({ select: ["beginTime"] });
+    }
 }

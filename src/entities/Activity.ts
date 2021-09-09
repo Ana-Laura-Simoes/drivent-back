@@ -1,6 +1,6 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
 import ActivityUser from "./ActivityUser";
-import { Like } from "typeorm";
+import Location from "./Location";
 
 @Entity("activities")
 export default class Activity extends BaseEntity {
@@ -12,6 +12,9 @@ export default class Activity extends BaseEntity {
 
     @Column()
     description: string;
+
+    @Column()
+    locationId: string;
 
     @Column()
     maxInscriptions: number;
@@ -27,6 +30,9 @@ export default class Activity extends BaseEntity {
 
     @OneToMany(() => ActivityUser, (activityUser) => activityUser.activity)
     activityUser: ActivityUser;
+
+    @ManyToOne(() => Location, (location) => location.activity, { eager: true })
+    location: Location;
 
     static async getDays() {
       return await this.find({ select: ["beginTime"] });

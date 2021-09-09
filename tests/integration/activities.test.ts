@@ -7,7 +7,7 @@ import { createBasicSettings } from "../utils/app";
 import { createUser } from "../factories/userFactory";
 import {createLocation} from "../factories/locationFactory";
 import {createActivity} from "../factories/activityFactory";
-import { array } from "joi";
+import {signIn} from "../factories/userFactory";
 
 const agent = supertest(app);
 
@@ -24,20 +24,14 @@ afterAll(async () => {
   await clearDatabase();
   await endConnection();
 });
-async function signIn(){
-    const user = await createUser();
-    const {email} = user
-    const session = await agent.post("/auth/sign-in").send({email,password:"123456"});
-    const {token} = session.body
-    return token;
-}
 
 describe("GET /activities/days", () => {
     it("should respond with status OK and object with array of activities for that day for valid token", async () => {
       const location = await createLocation();
       const activity = await createActivity(location.id);
-      const token = await signIn();
-  
+      const user = await createUser();
+      const token = await signIn(user);
+
       const response = await agent.get("/activities/days").set('Authorization', `Bearer ${token}`);
       expect(response.statusCode).toEqual(httpStatus.OK);
       expect(response.body).toEqual(
@@ -65,22 +59,25 @@ describe("GET /activities/:day", () => {
   it("should respond with status OK and object with array of activities for that day for valid token", async () => {
     const location = await createLocation();
     const activity = await createActivity(location.id);
-    const token = await signIn();
+    const user = await createUser();
+    const token = await signIn(user);
 
     const response = await agent.get("/activities/2021-10-22").set('Authorization', `Bearer ${token}`);
     expect(response.statusCode).toEqual(httpStatus.OK);
-
-    expect(response.body).toEqual([{
-          id: expect.any(Number),
-          name: activity.name,
-          description: activity.description,
-          locationId: location.id,
-          maxInscriptions: activity.maxInscriptions,
-          inscriptions: activity.inscriptions,
-          beginTime:expect.any(String),
-          endTime:expect.any(String),
-        }]
-      );
+    expect(response.body).toEqual(
+      expect.arrayContaining([
+      expect.objectContaining({
+        id: expect.any(Number),
+        name: activity.name,
+        description: activity.description,
+        locationId: location.id,
+        maxInscriptions: activity.maxInscriptions,
+        inscriptions: activity.inscriptions,
+        beginTime:expect.any(String),
+        endTime:expect.any(String),
+      })
+    ])
+    );
   });
 
 it("should respond with status UNAUTHORIZED for invalid token", async () => {

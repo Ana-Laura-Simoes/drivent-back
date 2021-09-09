@@ -4,7 +4,7 @@ import httpStatus from "http-status";
 import app, { init } from "../../src/app";
 import { clearDatabase, endConnection } from "../utils/database";
 import { createBasicSettings } from "../utils/app";
-import { createUser } from "../factories/userFactory";
+import { createUser, signIn } from "../factories/userFactory";
 import {createLocation} from "../factories/locationFactory";
 
 const agent = supertest(app);
@@ -24,16 +24,11 @@ afterAll(async () => {
 });
 
 describe("GET /locations", () => {
-    async function signIn(){
-        const user = await createUser();
-        const {email} = user
-        const session = await agent.post("/auth/sign-in").send({email,password:"123456"});
-        const {token} = session.body
-        return token;
-    }
+
   it("should respond with status OK for valid token", async () => {
     const location = await createLocation();
-    const token = await signIn();
+    const user = await createUser();
+    const token = await signIn(user);
     const response = await agent.get("/locations").set('Authorization', `Bearer ${token}`);
     expect(response.statusCode).toEqual(httpStatus.OK);
     expect(response.body).toEqual(

@@ -14,7 +14,7 @@ export default class Activity extends BaseEntity {
     description: string;
 
     @Column()
-    locationId: string;
+    locationId: number;
 
     @Column()
     maxInscriptions: number;
@@ -30,9 +30,6 @@ export default class Activity extends BaseEntity {
 
     @OneToMany(() => ActivityUser, (activityUser) => activityUser.activity)
     activityUser: ActivityUser;
-
-    @ManyToOne(() => Location, (location) => location.activity, { eager: true })
-    location: Location;
 
     static async getDays() {
       return await this.find({ select: ["beginTime"] });

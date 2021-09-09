@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import Activity from "@/entities/Activity";
 
 import * as service from "@/services/client/activity";
 

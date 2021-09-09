@@ -8,7 +8,8 @@ export default class Location extends BaseEntity {
 
     @Column()
     name: string;
-    
-    @OneToMany(() => Activity, (activity) => activity.location )
-    activity: Activity [];
+
+    static async getLocations() {
+      return await this.find();
+    }
 }

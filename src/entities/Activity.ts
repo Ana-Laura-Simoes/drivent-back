@@ -1,6 +1,6 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from "typeorm";
 import ActivityUser from "./ActivityUser";
-import Location from "./Location";
+import ActivityInterface from "../interfaces/activity";
 
 @Entity("activities")
 export default class Activity extends BaseEntity {
@@ -30,6 +30,20 @@ export default class Activity extends BaseEntity {
 
     @OneToMany(() => ActivityUser, (activityUser) => activityUser.activity)
     activityUser: ActivityUser;
+
+    static async createNew({
+      name,
+      description,
+      locationId,
+      maxInscriptions,
+      inscriptions,
+      beginTime,
+      endTime,
+    }: ActivityInterface) {  
+      const newActivity = this.create({ name, description, locationId, maxInscriptions, inscriptions, beginTime, endTime });
+      await newActivity.save();
+      return newActivity;
+    }
 
     static async getDays() {
       return await this.find({ select: ["beginTime"] });

@@ -23,7 +23,7 @@ router.use("/payment", tokenValidationMiddleware, paymentRouter);
 router.use("/hotels", hotelRouter);
 router.use("/rooms", roomRouter);
 router.use("/activitiesRegistration", activityRouter);
-router.use("/userActivities", userActivitiesRouter);
+router.use("/userActivities", tokenValidationMiddleware, userActivitiesRouter);
 router.use("/activities", activityRouter );
 router.use("/locations", locationRouter );
 

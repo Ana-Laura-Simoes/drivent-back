@@ -32,4 +32,14 @@ export default class ActivityUser extends BaseEntity {
         relations: ["activity"]
       }
     );
-  }}
+  }
+
+  static async insertNewUserActivity(userId: number, activityId: number) {
+    await Activity.increaseInscriptions(activityId);
+    
+    return await this.insert({
+      userId,
+      activityId
+    });
+  }
+}

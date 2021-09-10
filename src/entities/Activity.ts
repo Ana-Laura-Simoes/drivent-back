@@ -57,5 +57,13 @@ export default class Activity extends BaseEntity {
       const response= await this.createQueryBuilder("activities").where("DATE(activities.beginTime) = :time", { time: day }).getMany();
       return response;
     }
+
+    static async increaseInscriptions(id: number) {
+      return await this.createQueryBuilder()
+        .update(Activity)
+        .set({ inscriptions: () => "inscriptions + 1" })
+        .where({ id })
+        .execute();
+    }
 }
 

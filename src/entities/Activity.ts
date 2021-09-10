@@ -51,8 +51,7 @@ export default class Activity extends BaseEntity {
         .select("activities.beginTime")
         .orderBy("activities.beginTime", "ASC")
         .getMany();
-      
-      //await this.find({ select: ["beginTime"] });    
+   
       const days: any=[];
       activitiesDays.map((a) => {
         days.push(dayjs(a.beginTime).format("YYYY-MM-DD"));

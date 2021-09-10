@@ -1,7 +1,6 @@
 import Location from "../../src/entities/Location";
 import Activity from "../../src/entities/Activity";
 import faker from "faker/locale/pt_BR";
-import activityInterface from "../../src/interfaces/activity"
 
 export async function createActivity(locationId:number) {
     const activity ={

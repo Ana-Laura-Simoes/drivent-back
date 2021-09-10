@@ -49,9 +49,29 @@ export default class Activity extends BaseEntity {
       return await this.find({ select: ["beginTime"] });
     }
 
+    static async getActivities() {
+      return await this.find({ select: ["maxInscriptions", "inscriptions"] });
+    }
+    
     static async getActivitiesByDay(day: string) {
       const response= await this.createQueryBuilder("activities").where("DATE(activities.beginTime) = :time", { time: day }).getMany();
       return response;
+    }
+
+    static async increaseInscriptions(id: number) {
+      return await this.createQueryBuilder()
+        .update(Activity)
+        .set({ inscriptions: () => "inscriptions + 1" })
+        .where({ id })
+        .execute();
+    }
+
+    static async decreaseInscriptions(id: number) {
+      return await this.createQueryBuilder()
+        .update(Activity)
+        .set({ inscriptions: () => "inscriptions - 1" })
+        .where({ id })
+        .execute();
     }
 }
 

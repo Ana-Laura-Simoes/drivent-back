@@ -5,7 +5,6 @@ import app, { init } from "../../src/app";
 import { clearDatabase, endConnection } from "../utils/database";
 import { createBasicSettings } from "../utils/app";
 import { createUser } from "../factories/userFactory";
-import { send } from "process";
 import { createHotel } from "../factories/hotelFactory";
 import { createRoom } from "../factories/roomFactory";
 

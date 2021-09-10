@@ -1,6 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import ActivityUser from "./ActivityUser";
 import ActivityInterface from "../interfaces/activity";
+import dayjs from "dayjs";
 
 @Entity("activities")
 export default class Activity extends BaseEntity {
@@ -46,7 +47,12 @@ export default class Activity extends BaseEntity {
     }
 
     static async getDays() {
-      return await this.find({ select: ["beginTime"] });
+      const activitiesDays = await this.find({ select: ["beginTime"] });    
+      const days: any=[];
+      activitiesDays.map((a) => {
+        days.push(dayjs(a.beginTime).format("YYYY-MM-DD"));
+      });   
+      return (days.filter((item: Activity, index: number) => days.indexOf(item) === index));     
     }
 
     static async getActivities() {

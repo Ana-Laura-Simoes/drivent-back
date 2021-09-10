@@ -5,5 +5,6 @@ const router = Router();
 
 router.get("/:id", controller.getUserActivities);
 router.post("/", controller.createNewUserActivity);
+router.post("/delete", controller.deleteUserActivity);
 
 export default router;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import httpStatus, { CONFLICT } from "http-status";
+import httpStatus, { CONFLICT, NOT_FOUND } from "http-status";
 import * as service from "@/services/client/userActivities";
-import ActivityInterface from "@/interfaces/activity";
+import NewActivity from "@/interfaces/newActivity";
 
 export async function getUserActivities(req: Request, res: Response) {
   const id: string  = req.params.id;
@@ -11,13 +11,24 @@ export async function getUserActivities(req: Request, res: Response) {
 
 export async function createNewUserActivity(req: Request, res: Response) {
   const id: number = req.body.id;
-  const newActivity: ActivityInterface = req.body.activity;
+  const newActivity: NewActivity = req.body.activity;
 
   const checkActivities = await service.checkUserActivities(id, newActivity);
 
   if(!checkActivities) return res.sendStatus(CONFLICT);
 
   await service.insertUserActivity(id, newActivity.id);
+
+  res.sendStatus(httpStatus.OK);
+}
+
+export async function deleteUserActivity(req: Request, res: Response) {
+  const id: number = req.body.id;
+  const newActivityId: number = req.body.activityId;
+
+  const checkIfSubscribed = await service.deleteUserActivity(id, newActivityId);
+
+  if(!checkIfSubscribed) return res.sendStatus(NOT_FOUND);
 
   res.sendStatus(httpStatus.OK);
 }

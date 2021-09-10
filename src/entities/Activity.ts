@@ -65,5 +65,13 @@ export default class Activity extends BaseEntity {
         .where({ id })
         .execute();
     }
+
+    static async decreaseInscriptions(id: number) {
+      return await this.createQueryBuilder()
+        .update(Activity)
+        .set({ inscriptions: () => "inscriptions - 1" })
+        .where({ id })
+        .execute();
+    }
 }
 

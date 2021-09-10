@@ -49,3 +49,11 @@ export async function checkUserActivities(id: number, activity: ActivityInterfac
 export async function insertUserActivity(userId: number, activityId: number) {
   return await ActivityUser.insertNewUserActivity(userId, activityId);
 }
+
+export async function deleteUserActivity(userId: number, activityId: number) {
+  const findThisActivity = await ActivityUser.getSingleActivity(userId, activityId);
+
+  if(findThisActivity.length === 0) return false;
+
+  return await ActivityUser.deleteUserActivity(userId, activityId);
+}

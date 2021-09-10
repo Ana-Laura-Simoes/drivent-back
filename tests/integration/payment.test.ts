@@ -4,8 +4,7 @@ import httpStatus from "http-status";
 import app, { init } from "../../src/app";
 import { clearDatabase, endConnection } from "../utils/database";
 import { createBasicSettings } from "../utils/app";
-import { createUser } from "../factories/userFactory";
-import { send } from "process";
+import { createUser, signIn } from "../factories/userFactory";
 
 const agent = supertest(app);
 
@@ -23,9 +22,10 @@ afterAll(async () => {
   await endConnection();
 });
 
-describe("POST /users", () => {
+describe("POST /payment", () => {
   it("should create a new payment", async () => {
     const user = await createUser();
+    const token = await signIn(user);
 
     const paymentBody = {
       userName: "Credit Card Name",
@@ -36,21 +36,22 @@ describe("POST /users", () => {
       hotel: true
     };
 
-    const payment = await agent.post("/payment").send(paymentBody);
+    const payment = await agent.post("/payment").send(paymentBody).set('Authorization', `Bearer ${token}`);
 
     expect(payment.statusCode).toEqual(httpStatus.CREATED);
   });
 
   it("should not create a new payment because of empty body", async () => {
-    await createUser();
-
-    const payment = await agent.post("/payment").send({});
+    const user = await createUser();
+    const token = await signIn(user);
+    const payment = await agent.post("/payment").send({}).set('Authorization', `Bearer ${token}`);
 
     expect(payment.statusCode).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
   });
 
   it("should return error when userName has less than 4 characters", async () => {
     const user = await createUser();
+    const token = await signIn(user);
 
     const paymentBody = {
       userName: "Cre",
@@ -61,13 +62,14 @@ describe("POST /users", () => {
       hotel: true
     };
 
-    const payment = await agent.post("/payment").send(paymentBody);
+    const payment = await agent.post("/payment").send(paymentBody).set('Authorization', `Bearer ${token}`);
 
     expect(payment.statusCode).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
   });
 
   it("should return error when userId is invalid", async () => {
     const user = await createUser();
+    const token = await signIn(user);
 
     const paymentBody = {
       userName: "Credit Card Name",
@@ -78,13 +80,14 @@ describe("POST /users", () => {
       hotel: true
     };
 
-    const payment = await agent.post("/payment").send(paymentBody);
+    const payment = await agent.post("/payment").send(paymentBody).set('Authorization', `Bearer ${token}`);
 
     expect(payment.statusCode).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
   });
 
   it("should return error when price is invalid", async () => {
     const user = await createUser();
+    const token = await signIn(user);
 
     const paymentBody = {
       userName: "Credit Card Name",
@@ -95,13 +98,14 @@ describe("POST /users", () => {
       hotel: true
     };
 
-    const payment = await agent.post("/payment").send(paymentBody);
+    const payment = await agent.post("/payment").send(paymentBody).set('Authorization', `Bearer ${token}`);
 
     expect(payment.statusCode).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
   });
 
   it("should return error when type is invalid", async () => {
     const user = await createUser();
+    const token = await signIn(user);
 
     const paymentBody = {
       userName: "Credit Card Name",
@@ -112,13 +116,14 @@ describe("POST /users", () => {
       hotel: true
     };
 
-    const payment = await agent.post("/payment").send(paymentBody);
+    const payment = await agent.post("/payment").send(paymentBody).set('Authorization', `Bearer ${token}`);
 
     expect(payment.statusCode).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
   });
 
   it("should return error when hotel is not a boolean", async () => {
     const user = await createUser();
+    const token = await signIn(user);
 
     const paymentBody = {
       userName: "Credit Card Name",
@@ -129,13 +134,13 @@ describe("POST /users", () => {
       hotel: "notBoolean"
     };
 
-    const payment = await agent.post("/payment").send(paymentBody);
+    const payment = await agent.post("/payment").send(paymentBody).set('Authorization', `Bearer ${token}`);
 
     expect(payment.statusCode).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
   });
 });
 
-describe("GET /users", () => {
+describe("GET /payment", () => {
   it("should return status 401", async () => {
     const payment = await agent.get("/payment");
 

@@ -1,5 +1,4 @@
 interface ActivityInterface {
-    id: number,
     name: string,
     description: string,
     locationId: number,

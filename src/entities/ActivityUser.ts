@@ -42,4 +42,24 @@ export default class ActivityUser extends BaseEntity {
       activityId
     });
   }
+
+  static async getSingleActivity(userId: number, activityId: number) {
+    return await this.find(
+      {
+        where: { userId, activityId },
+        relations: ["activity"]
+      }
+    );
+  }
+
+  static async deleteUserActivity(userId: number, activityId: number) {
+    await Activity.decreaseInscriptions(activityId);
+    
+    return await this.createQueryBuilder()
+      .delete()
+      .from(ActivityUser)
+      .where("userId = :userId and activityId = :activityId", { userId, activityId })
+      .execute();
+  }
 }
+

@@ -21,6 +21,5 @@
     {
       "transform": "typescript-transform-paths"
     }
-  ]
-  
+  ]  
 }

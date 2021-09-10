@@ -47,7 +47,12 @@ export default class Activity extends BaseEntity {
     }
 
     static async getDays() {
-      const activitiesDays = await this.find({ select: ["beginTime"] });    
+      const activitiesDays =  await this.createQueryBuilder("activities")
+        .select("activities.beginTime")
+        .orderBy("activities.beginTime", "ASC")
+        .getMany();
+      
+      //await this.find({ select: ["beginTime"] });    
       const days: any=[];
       activitiesDays.map((a) => {
         days.push(dayjs(a.beginTime).format("YYYY-MM-DD"));
@@ -60,7 +65,10 @@ export default class Activity extends BaseEntity {
     }
     
     static async getActivitiesByDay(day: string) {
-      const response= await this.createQueryBuilder("activities").where("DATE(activities.beginTime) = :time", { time: day }).getMany();
+      const response= await this.createQueryBuilder("activities")
+        .where("DATE(activities.beginTime) = :time", { time: day })
+        .orderBy("activities.beginTime", "ASC")
+        .getMany();
       return response;
     }
 

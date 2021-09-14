@@ -1,7 +1,5 @@
 import * as redis from "redis";
 const client = redis.createClient();
-import * as redisSet from "../../src/services/client/auth";
-import * as redisGet from "../../src/middlewares/tokenValidationMiddleware";
 
 describe("setToken", () => {
   it("Should add a key into the database", () => {

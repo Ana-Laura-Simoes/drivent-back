@@ -12,6 +12,13 @@ interface JwtPayload {
     userId: number
 }
 
+async function getToken(id: number, token: string) {
+  client.get(`${id}`, function(err, value) {
+    if (err) console.error(err);
+    if (token !== value) throw new UnauthorizedError();
+  });
+}
+
 export default async function authenticationMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
     const authHeader = req.header("Authorization");
@@ -20,14 +27,10 @@ export default async function authenticationMiddleware(req: Request, res: Respon
     if (!token) {
       throw new UnauthorizedError();
     } 
-  
+    
     const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
 
-    //const userSession = await client.get(`${token}`, redis.print);
-
-    if(token !== token) {
-      throw new UnauthorizedError();
-    }
+    await getToken(userId, token);
 
     req.user = { id: userId };
     next();

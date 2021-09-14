@@ -36,9 +36,8 @@ describe("GET /activities/days", () => {
       expect(response.statusCode).toEqual(httpStatus.OK);
       expect(response.body).toEqual(
         expect.arrayContaining([
-        expect.objectContaining({
-            beginTime: expect.any(String)
-        }) 
+         expect.any(String)
+      
        ])
       );
     });

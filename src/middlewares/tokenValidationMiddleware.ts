@@ -12,7 +12,7 @@ interface JwtPayload {
     userId: number
 }
 
-async function getToken(id: number, token: string) {
+export async function getToken(id: number, token: string) {
   client.get(`${id}`, function(err, value) {
     if (err) console.error(err);
     if (token !== value) throw new UnauthorizedError();

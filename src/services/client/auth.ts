@@ -7,8 +7,11 @@ import Session from "@/entities/Session";
 import * as redis from "redis";
 const client = redis.createClient();
 
-async function setToken(id: number, token: string) {
-  client.set(`${id}`, `${token}`);
+export async function setToken(id: number, token: string) {
+  client.set(`${id}`, `${token}`, (err, data) => {
+    if (err) console.error(err);
+    return data;
+  });
 }
 
 export async function signIn(email: string, password: string) {

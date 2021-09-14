@@ -10,7 +10,6 @@ export async function getDays(req: Request, res: Response) {
 
 export async function getActivitiesByDay(req: Request, res: Response) {
   const day = req.params.day;
-  console.log(day);
   const activities = await service.getActivitiesByDay(day);
   res.status(httpStatus.OK).send(activities);
 }

@@ -5,8 +5,18 @@ import jwt from "jsonwebtoken";
 import * as sessionService from "@/services/client/session";
 import UnauthorizedError from "@/errors/Unauthorized";
 
+import * as redis from "redis";
+const client = redis.createClient();
+
 interface JwtPayload {
     userId: number
+}
+
+export async function getToken(id: number, token: string) {
+  client.get(`${id}`, function(err, value) {
+    if (err) console.error(err);
+    if (token !== value) throw new UnauthorizedError();
+  });
 }
 
 export default async function authenticationMiddleware(req: Request, res: Response, next: NextFunction) {
@@ -17,14 +27,10 @@ export default async function authenticationMiddleware(req: Request, res: Respon
     if (!token) {
       throw new UnauthorizedError();
     } 
-  
+    
     const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
 
-    const userSession = await sessionService.findSessionByToken(token);
-
-    if(userSession.token !== token) {
-      throw new UnauthorizedError();
-    }
+    await getToken(userId, token);
 
     req.user = { id: userId };
     next();

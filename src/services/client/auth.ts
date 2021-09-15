@@ -5,7 +5,15 @@ import User from "@/entities/User";
 import Session from "@/entities/Session";
 
 import * as redis from "redis";
-const client = redis.createClient();
+import { writeFileSync } from "fs";
+const client =
+  process.env.NODE_ENV === "development"
+    ? redis.createClient()
+    : redis.createClient(process.env.REDIS_URL, {
+      tls: {
+        rejectUnauthorized: false,
+      },
+    });
 
 export async function setToken(id: number, token: string) {
   client.set(`${id}`, `${token}`, (err, data) => {

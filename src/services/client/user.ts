@@ -14,3 +14,11 @@ export async function createNewUser(email: string, password: string) {
   const user = await User.createNew(email, password);
   return user;
 }
+
+export async function UpdateUserPicture(id: number, image: string) {
+  await User.changeUserPicture(id, image);
+}
+
+export async function getUserPicture(id: number) {
+  return await User.getUserById(id);
+}

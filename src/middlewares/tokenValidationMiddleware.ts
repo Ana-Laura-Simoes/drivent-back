@@ -8,20 +8,20 @@ import UnauthorizedError from "@/errors/Unauthorized";
 import * as redis from "redis";
 import { writeFileSync } from "fs";
 const client =
-  process.env.NODE_ENV === "development"
-    ? redis.createClient()
-    : redis.createClient(process.env.REDIS_URL, {
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
+  process.env.NODE_ENV === "production"
+    ? redis.createClient(process.env.REDIS_URL, {
+        tls: {
+          rejectUnauthorized: false,
+        },
+      })
+    : redis.createClient();
 
 interface JwtPayload {
   userId: number;
 }
 
 export async function getToken(id: number, token: string) {
-  client.get(`${id}`, function(err, value) {
+  client.get(`${id}`, function (err, value) {
     if (err) console.error(err);
     if (token !== value) throw new UnauthorizedError();
   });

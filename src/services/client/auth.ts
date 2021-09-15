@@ -7,13 +7,13 @@ import Session from "@/entities/Session";
 import * as redis from "redis";
 import { writeFileSync } from "fs";
 const client =
-  process.env.NODE_ENV === "development"
-    ? redis.createClient()
-    : redis.createClient(process.env.REDIS_URL, {
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
+  process.env.NODE_ENV === "production"
+    ? redis.createClient(process.env.REDIS_URL, {
+        tls: {
+          rejectUnauthorized: false,
+        },
+      })
+    : redis.createClient();
 
 export async function setToken(id: number, token: string) {
   client.set(`${id}`, `${token}`, (err, data) => {

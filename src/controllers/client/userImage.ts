@@ -15,5 +15,5 @@ export async function getUserImage(req: Request, res: Response) {
   
   const userPicture = await service.getUserPicture(Number(id));
   
-  res.status(httpStatus.CREATED).send(userPicture.image);
+  res.status(httpStatus.OK).send(userPicture.image);
 }

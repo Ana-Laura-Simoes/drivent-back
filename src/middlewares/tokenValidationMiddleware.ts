@@ -6,14 +6,14 @@ import * as sessionService from "@/services/client/session";
 import UnauthorizedError from "@/errors/Unauthorized";
 
 import * as redis from "redis";
-import { writeFileSync } from "fs";
+import * as fs from "fs";
 const client =
   process.env.NODE_ENV === "production"
     ? redis.createClient(process.env.REDIS_URL, {
-        tls: {
-          rejectUnauthorized: false,
-        },
-      })
+      tls: {
+        rejectUnauthorized: false,
+      },
+    })
     : redis.createClient();
 
 interface JwtPayload {
@@ -21,7 +21,7 @@ interface JwtPayload {
 }
 
 export async function getToken(id: number, token: string) {
-  client.get(`${id}`, function (err, value) {
+  client.get(`${id}`, function(err, value) {
     if (err) console.error(err);
     if (token !== value) throw new UnauthorizedError();
   });

@@ -22,7 +22,18 @@ export default class PasswordRecovery extends BaseEntity {
       return newLocation;
     }
 
-    static async getPasswordRecovery() {
-      return await this.find();
+    static async checkIfTokenIsExpired(token: string) {      
+      const user = await this.find({ token });
+      const x: any = new Date(user[0].createdAt);
+      const y: any = new Date();
+      const time = y - x;
+      const formatedTime = Math.round(((time%86_400_000)%3_600_000)/60_000);
+
+      return formatedTime;
     }
+
+    static async getPasswordRecovery(token: string) {
+      const user = await this.find({ token });
+      return user;
+    }   
 }

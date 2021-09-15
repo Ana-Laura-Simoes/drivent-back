@@ -1,7 +1,7 @@
-interface PasswordRecovery {
-    id: number,
-    email: string,   
-    token: string,
+interface PasswordRecoveryInterface {
+    email: string,
+    password: string,
+    confirmPassword: string,
 }
 
-export default PasswordRecovery;
+export default PasswordRecoveryInterface;

@@ -1,7 +1,8 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany, getConnection } from "typeorm";
 import bcrypt from "bcrypt";
 import EmailNotAvailableError from "@/errors/EmailNotAvailable";
 import ActivityUser from "./ActivityUser";
+import PasswordRecoveryInterface from "@/interfaces/passwordRecovery";
 
 @Entity("users")
 export default class User extends BaseEntity {
@@ -40,7 +41,7 @@ export default class User extends BaseEntity {
     if(user) {
       throw new EmailNotAvailableError(email);
     }
-  }
+  }  
 
   static async findByEmailAndPassword(email: string, password: string) {
     const user = await this.findOne({ email });
@@ -54,6 +55,16 @@ export default class User extends BaseEntity {
 
   static async getUserById(id: number) {
     return await this.findOne({ id });
+  }
+
+  static async setNewPassword(passwordData: PasswordRecoveryInterface) {
+    const hashedPassword = this.hashPassword(passwordData.password);
+    return await this
+      .createQueryBuilder()
+      .update(User)
+      .set({ password: hashedPassword })
+      .where("email = :email", { email: passwordData.email })
+      .execute();
   }
 }
 

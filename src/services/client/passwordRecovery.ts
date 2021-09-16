@@ -20,7 +20,7 @@ export async function createNewRecovery(recoveryData: string) {
     from: "driventg4@hotmail.com", 
     subject: "Link de recuperação de senha",
     text: "Link de recuperação de senha",
-    html: `Olá! Clique nesse <a href="http://localhost:3000/forgetpassword/${user.token}">link</a> recuperar sua senha.    
+    html: `Olá! Clique nesse <a href="${process.env.LINK}/forgetpassword/${user.token}">link</a> recuperar sua senha.    
     `,
   };
     

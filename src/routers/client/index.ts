@@ -10,6 +10,7 @@ import roomRouter from "@/routers/client/room";
 import activityRouter from "@/routers/client/activity";
 import userActivitiesRouter from "@/routers/client/userActivities";
 import locationRouter from "@/routers/client/location";
+import recoveryPasswordRouter from "@/routers/client/recoveryPassword";
 import userImageRouter from "@/routers/client/userImage";
 
 import tokenValidationMiddleware from "@/middlewares/tokenValidationMiddleware";
@@ -27,6 +28,8 @@ router.use("/activitiesRegistration", activityRouter);
 router.use("/userActivities", tokenValidationMiddleware, userActivitiesRouter);
 router.use("/activities", activityRouter );
 router.use("/locations", locationRouter );
+router.use("/forgetpassword", recoveryPasswordRouter);
+router.use("/forgetpasword/setnewpassword", recoveryPasswordRouter);
 router.use("/userImage", userImageRouter);
 
 export default router;

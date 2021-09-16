@@ -7,7 +7,6 @@ export async function createNewRecovery(req: Request, res: Response) {
   const recovery = await passwordRecoveryService.createNewRecovery(
     req.body.email
   );
-  console.log(recovery);
   res.status(httpStatus.CREATED).send(recovery);
 }
 

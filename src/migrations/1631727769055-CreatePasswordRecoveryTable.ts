@@ -4,7 +4,6 @@ export class CreatePasswordRecoveryTable1631727769055 implements MigrationInterf
     name = "CreatePasswordRecoveryTable1631727769055"
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.query("ALTER TABLE \"activities\" DROP CONSTRAINT \"FK_74b92be5924b9fb1d808b4ffcd4\"");
       await queryRunner.query("CREATE TABLE \"passwordsRecovery\" (\"id\" SERIAL NOT NULL, \"email\" character varying NOT NULL, \"createdAt\" TIMESTAMP NOT NULL DEFAULT now(), \"token\" character varying NOT NULL, CONSTRAINT \"PK_625830f4ed67eebe2b97ba3acd6\" PRIMARY KEY (\"id\"))");
     }
 

@@ -3,6 +3,7 @@ import User from "@/entities/User";
 import InvalidEmailError from "@/errors/InvalidEmail";
 import sgMail from "@sendgrid/mail";
 import PasswordRecoveryInterface from "@/interfaces/passwordRecovery";
+import UnauthorizedError from "@/errors/Unauthorized";
 
 export async function createNewRecovery(recoveryData: string) {
   const existingUser = await User.findOne({ email: recoveryData } );
@@ -26,10 +27,9 @@ export async function createNewRecovery(recoveryData: string) {
   (async () => {
     try {
       await sgMail.send(msg);
-    } catch (error) {
-      console.error(error);  
+    } catch (error) {      
       if (error.response) {
-        console.error(error.response.body);
+        throw new UnauthorizedError;
       }
     }
   })();

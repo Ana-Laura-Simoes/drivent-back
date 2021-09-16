@@ -4,6 +4,7 @@ import User from "../../src/entities/User";
 import Session from "../../src/entities/Session";
 import jwt from "jsonwebtoken";
 import * as redis from "redis";
+import { v4 as uuidv4 } from "uuid";
 const client = redis.createClient();
 
 async function setToken(id: number, token: string) {
@@ -26,7 +27,15 @@ export async function signIn(user:User){
   
     await setToken(user.id, token);
   
-    return  token ;
-  
-  
+    return  token ;   
 }
+
+// export async function createUserWithToken() {
+//   const token = uuidv4();
+//   const user = User.create({
+//     email: faker.internet.email(),
+//     token: token,
+//   });
+//   await user.save();
+//   return user;
+// }

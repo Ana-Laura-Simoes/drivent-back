@@ -38,7 +38,13 @@ The following tools and frameworks were used in the construction of the project:
   
   
 ### Other technologies
-
+- Sendgrid
+- bcrypt
+- dayjs
+- dotenv
+- Joi
+- jsonwebtoken
+- uuid
 
 
 ## How to run

@@ -1,8 +1,45 @@
-# drivent-back
-Back-end for Driven.t, an event management solution.
+# API Driven.t
+
+This is an API for a web application that manages registrations and reservations for the biggest Driven event, coming soon!
+
+![Peek 2021-10-08 03-44](https://user-images.githubusercontent.com/81721608/136510702-f038a5e9-deec-442d-8e20-f323cf685f63.gif)
+
+Book your ticket now at: https://drivent-front-mu.vercel.app/
 
 ## About
 Driven.t is a web browser application with which you can manage every single aspect of your event.
+Below are the implemented features:
+
+- Sign Up
+- Sign In
+- Password recovery
+- Enrollment form
+- Ticket selection (online or face-to-face)
+- Payment
+
+- Hotel selection
+- Room reservation
+- List of activities per day
+- Activities selection
+- Digital certificate of attendance
+
+<div align="center">
+</div> 
+
+## Technologies
+The following tools and frameworks were used in the construction of the project:<br>
+  ![NodeJS](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)&nbsp;
+  ![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)&nbsp;
+  ![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)&nbsp;
+  ![PostgresSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)&nbsp;
+  ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)&nbsp;
+  ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white)&nbsp;
+  ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)&nbsp;
+  
+  
+### Other technologies
+
+
 
 ## How to run
 1. Clone this repository
